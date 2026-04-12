@@ -1,0 +1,454 @@
+{
+  "siteKey": "玩偶",
+  "siteName": "👽玩偶哥哥┃4K弹幕",
+  "videoId": "1",
+  "videoName": "仙逆",
+  "sources": [
+    {
+      "name": "线路1-极速",
+      "episodes": [
+        {
+          "name": "第1集",
+          "url": "https://example.com/xianni/01.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第2集",
+          "url": "https://example.com/xianni/02.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第3集",
+          "url": "https://example.com/xianni/03.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第4集",
+          "url": "https://example.com/xianni/04.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第5集",
+          "url": "https://example.com/xianni/05.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第6集",
+          "url": "https://example.com/xianni/06.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第7集",
+          "url": "https://example.com/xianni/07.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第8集",
+          "url": "https://example.com/xianni/08.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第9集",
+          "url": "https://example.com/xianni/09.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第10集",
+          "url": "https://example.com/xianni/10.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第11集",
+          "url": "https://example.com/xianni/11.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第12集",
+          "url": "https://example.com/xianni/12.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第13集",
+          "url": "https://example.com/xianni/13.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第14集",
+          "url": "https://example.com/xianni/14.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第15集",
+          "url": "https://example.com/xianni/15.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第16集",
+          "url": "https://example.com/xianni/16.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第17集",
+          "url": "https://example.com/xianni/17.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第18集",
+          "url": "https://example.com/xianni/18.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第19集",
+          "url": "https://example.com/xianni/19.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第20集",
+          "url": "https://example.com/xianni/20.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第21集",
+          "url": "https://example.com/xianni/21.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第22集",
+          "url": "https://example.com/xianni/22.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第23集",
+          "url": "https://example.com/xianni/23.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第24集",
+          "url": "https://example.com/xianni/24.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        }
+      ]
+    },
+    {
+      "name": "线路2-备用",
+      "episodes": [
+        {
+          "name": "第1集",
+          "url": "https://backup.com/xianni/ep01.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第2集",
+          "url": "https://backup.com/xianni/ep02.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第3集",
+          "url": "https://backup.com/xianni/ep03.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第4集",
+          "url": "https://backup.com/xianni/ep04.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第5集",
+          "url": "https://backup.com/xianni/ep05.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第6集",
+          "url": "https://backup.com/xianni/ep06.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第7集",
+          "url": "https://backup.com/xianni/ep07.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第8集",
+          "url": "https://backup.com/xianni/ep08.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第9集",
+          "url": "https://backup.com/xianni/ep09.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第10集",
+          "url": "https://backup.com/xianni/ep10.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第11集",
+          "url": "https://backup.com/xianni/ep11.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        },
+        {
+          "name": "第12集",
+          "url": "https://backup.com/xianni/ep12.mp4",
+          "isM3U8": false,
+          "isMP4": true
+        }
+      ]
+    },
+    {
+      "name": "线路3-高清",
+      "episodes": [
+        {
+          "name": "第1集",
+          "url": "https://hd.com/xianni/01.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第2集",
+          "url": "https://hd.com/xianni/02.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第3集",
+          "url": "https://hd.com/xianni/03.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第4集",
+          "url": "https://hd.com/xianni/04.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第5集",
+          "url": "https://hd.com/xianni/05.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第6集",
+          "url": "https://hd.com/xianni/06.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第7集",
+          "url": "https://hd.com/xianni/07.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第8集",
+          "url": "https://hd.com/xianni/08.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第9集",
+          "url": "https://hd.com/xianni/09.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        },
+        {
+          "name": "第10集",
+          "url": "https://hd.com/xianni/10.m3u8",
+          "isM3U8": true,
+          "isMP4": false
+        }
+      ]
+    }
+  ],
+  "currentSource": {
+    "name": "线路1-极速",
+    "episodes": [
+      {
+        "name": "第1集",
+        "url": "https://example.com/xianni/01.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第2集",
+        "url": "https://example.com/xianni/02.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第3集",
+        "url": "https://example.com/xianni/03.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第4集",
+        "url": "https://example.com/xianni/04.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第5集",
+        "url": "https://example.com/xianni/05.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第6集",
+        "url": "https://example.com/xianni/06.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第7集",
+        "url": "https://example.com/xianni/07.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第8集",
+        "url": "https://example.com/xianni/08.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第9集",
+        "url": "https://example.com/xianni/09.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第10集",
+        "url": "https://example.com/xianni/10.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第11集",
+        "url": "https://example.com/xianni/11.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第12集",
+        "url": "https://example.com/xianni/12.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第13集",
+        "url": "https://example.com/xianni/13.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第14集",
+        "url": "https://example.com/xianni/14.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第15集",
+        "url": "https://example.com/xianni/15.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第16集",
+        "url": "https://example.com/xianni/16.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第17集",
+        "url": "https://example.com/xianni/17.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第18集",
+        "url": "https://example.com/xianni/18.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第19集",
+        "url": "https://example.com/xianni/19.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第20集",
+        "url": "https://example.com/xianni/20.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第21集",
+        "url": "https://example.com/xianni/21.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第22集",
+        "url": "https://example.com/xianni/22.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第23集",
+        "url": "https://example.com/xianni/23.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      },
+      {
+        "name": "第24集",
+        "url": "https://example.com/xianni/24.m3u8",
+        "isM3U8": true,
+        "isMP4": false
+      }
+    ]
+  },
+  "currentEpisode": {
+    "name": "第1集",
+    "url": "https://example.com/xianni/01.m3u8",
+    "isM3U8": true,
+    "isMP4": false
+  }
+}

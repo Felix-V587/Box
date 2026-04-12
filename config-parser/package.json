@@ -1,0 +1,30 @@
+{
+  "name": "config-parser",
+  "version": "1.0.0",
+  "description": "TVBox配置解析器 - Node.js + TypeScript实现",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "search": "ts-node src/search-index.ts",
+    "search:demo": "ts-node src/search-demo.ts",
+    "player": "ts-node src/player-index.ts",
+    "player:demo": "ts-node src/player-demo.ts",
+    "dev": "nodemon --exec ts-node src/index.ts"
+  },
+  "keywords": [
+    "tvbox",
+    "config-parser"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "nodemon": "^3.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

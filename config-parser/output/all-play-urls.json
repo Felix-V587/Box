@@ -1,0 +1,278 @@
+[
+  {
+    "source": "线路1-极速",
+    "episode": "第1集",
+    "url": "https://example.com/xianni/01.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第2集",
+    "url": "https://example.com/xianni/02.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第3集",
+    "url": "https://example.com/xianni/03.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第4集",
+    "url": "https://example.com/xianni/04.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第5集",
+    "url": "https://example.com/xianni/05.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第6集",
+    "url": "https://example.com/xianni/06.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第7集",
+    "url": "https://example.com/xianni/07.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第8集",
+    "url": "https://example.com/xianni/08.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第9集",
+    "url": "https://example.com/xianni/09.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第10集",
+    "url": "https://example.com/xianni/10.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第11集",
+    "url": "https://example.com/xianni/11.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第12集",
+    "url": "https://example.com/xianni/12.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第13集",
+    "url": "https://example.com/xianni/13.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第14集",
+    "url": "https://example.com/xianni/14.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第15集",
+    "url": "https://example.com/xianni/15.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第16集",
+    "url": "https://example.com/xianni/16.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第17集",
+    "url": "https://example.com/xianni/17.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第18集",
+    "url": "https://example.com/xianni/18.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第19集",
+    "url": "https://example.com/xianni/19.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第20集",
+    "url": "https://example.com/xianni/20.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第21集",
+    "url": "https://example.com/xianni/21.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第22集",
+    "url": "https://example.com/xianni/22.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第23集",
+    "url": "https://example.com/xianni/23.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路1-极速",
+    "episode": "第24集",
+    "url": "https://example.com/xianni/24.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第1集",
+    "url": "https://backup.com/xianni/ep01.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第2集",
+    "url": "https://backup.com/xianni/ep02.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第3集",
+    "url": "https://backup.com/xianni/ep03.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第4集",
+    "url": "https://backup.com/xianni/ep04.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第5集",
+    "url": "https://backup.com/xianni/ep05.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第6集",
+    "url": "https://backup.com/xianni/ep06.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第7集",
+    "url": "https://backup.com/xianni/ep07.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第8集",
+    "url": "https://backup.com/xianni/ep08.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第9集",
+    "url": "https://backup.com/xianni/ep09.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第10集",
+    "url": "https://backup.com/xianni/ep10.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第11集",
+    "url": "https://backup.com/xianni/ep11.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路2-备用",
+    "episode": "第12集",
+    "url": "https://backup.com/xianni/ep12.mp4",
+    "type": "MP4"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第1集",
+    "url": "https://hd.com/xianni/01.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第2集",
+    "url": "https://hd.com/xianni/02.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第3集",
+    "url": "https://hd.com/xianni/03.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第4集",
+    "url": "https://hd.com/xianni/04.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第5集",
+    "url": "https://hd.com/xianni/05.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第6集",
+    "url": "https://hd.com/xianni/06.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第7集",
+    "url": "https://hd.com/xianni/07.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第8集",
+    "url": "https://hd.com/xianni/08.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第9集",
+    "url": "https://hd.com/xianni/09.m3u8",
+    "type": "M3U8"
+  },
+  {
+    "source": "线路3-高清",
+    "episode": "第10集",
+    "url": "https://hd.com/xianni/10.m3u8",
+    "type": "M3U8"
+  }
+]

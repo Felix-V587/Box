@@ -100,3 +100,7 @@ lint/tmp/
 
 *.hprof
 output-metadata.json
+.preferences
+
+node_modules
+tvbox-fullstack/backend/node_modules
