@@ -1,73 +1,132 @@
-# frontend
+# TVBox Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+TVBox Frontend 是基于 Vue 3 + Element Plus 的视频搜索和管理前端应用。
 
-## Recommended IDE Setup
+## 技术栈
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **框架**: Vue 3.5
+- **UI 组件库**: Element Plus 2.9
+- **状态管理**: Pinia 3.0
+- **路由**: Vue Router 5.0
+- **HTTP 客户端**: Axios
+- **构建工具**: Vite 8.0
+- **语言**: TypeScript 6.0
 
-## Recommended Browser Setup
+## 项目结构
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+```
+src/
+├── api/              # API 接口
+│   ├── request.ts    # Axios 实例
+│   ├── source.ts     # 数据源 API
+│   ├── search.ts     # 搜索 API
+│   └── player.ts     # 播放 API
+├── stores/           # Pinia Store
+│   ├── source.ts     # 数据源状态
+│   └── search.ts     # 搜索状态
+├── types/            # TypeScript 类型定义
+│   └── index.ts
+├── views/            # 视图组件
+│   └── SearchView.vue
+├── components/       # 公共组件
+├── router/           # 路由配置
+├── App.vue
+└── main.ts
+```
 
-## Type Support for `.vue` Imports in TS
+## 快速开始
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### 1. 安装依赖
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
+cd tv-box/frontend
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### 2. 启动开发服务器
 
-```sh
-pnpm dev
+```bash
+pnpm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 3. 访问应用
 
-```sh
-pnpm build
+浏览器打开: http://localhost:5173
+
+## API 配置
+
+API 基础路径配置在 `src/api/request.ts`:
+
+```typescript
+const instance: AxiosInstance = axios.create({
+  baseURL: 'http://localhost:3000/api/v1',
+  timeout: 30000,
+})
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+如果后端地址不同，请修改 `baseURL`。
 
-```sh
-pnpm test:unit
+## 功能模块
+
+### 1. 数据源管理
+- 数据源列表展示
+- 启用/禁用数据源
+- 上传配置文件
+- 测试连接
+
+### 2. 视频搜索
+- 关键词搜索
+- 多数据源并发搜索
+- 搜索历史
+- 结果展示
+
+### 3. 视频详情
+- 详情展示
+- 剧集列表
+- 多线路选择
+
+### 4. 播放功能
+- 播放地址解析
+- 播放记录
+- 收藏管理
+
+## 开发指南
+
+### 添加新页面
+
+1. 在 `src/views/` 创建 Vue 组件
+2. 在 `src/router/index.ts` 添加路由
+3. 在 `src/stores/` 创建状态管理（如需要）
+
+### 添加新 API
+
+1. 在 `src/types/index.ts` 定义类型
+2. 在 `src/api/` 创建 API 模块
+3. 在组件中调用
+
+### 使用 Element Plus
+
+```vue
+<template>
+  <el-button type="primary">按钮</el-button>
+</template>
 ```
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+## 构建生产版本
 
-```sh
-# Install browsers for the first run
-npx playwright install
-
-# When testing on CI, must build the project first
-pnpm build
-
-# Runs the end-to-end tests
-pnpm test:e2e
-# Runs the tests only on Chromium
-pnpm test:e2e --project=chromium
-# Runs the tests of a specific file
-pnpm test:e2e tests/example.spec.ts
-# Runs the tests in debug mode
-pnpm test:e2e --debug
+```bash
+pnpm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+构建产物在 `dist/` 目录。
 
-```sh
-pnpm lint
-```
+## 环境要求
+
+- Node.js: ^20.19.0 || >=22.12.0
+- pnpm: 最新版本
+
+## 注意事项
+
+- 确保后端服务已启动
+- 检查 API 基础路径配置
+- 开发时注意跨域问题（后端已配置 CORS）
