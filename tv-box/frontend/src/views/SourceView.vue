@@ -8,6 +8,10 @@
         <el-icon><Plus /></el-icon>
         添加数据源
       </el-button>
+      <el-button type="success" @click="showParseDialog = true">
+        <el-icon><Link /></el-icon>
+        从URL导入
+      </el-button>
       <el-upload
         :show-file-list="false"
         :before-upload="handleUpload"
@@ -138,13 +142,48 @@
         </el-button>
       </template>
     </el-dialog>
+
+    <!-- URL解析对话框 -->
+    <el-dialog v-model="showParseDialog" title="从URL导入配置" width="600px">
+      <el-tabs v-model="parseTab">
+        <el-tab-pane label="从URL导入" name="url">
+          <el-form :model="parseForm" label-width="80px" style="margin-top: 20px;">
+            <el-form-item label="配置URL">
+              <el-input
+                v-model="parseForm.url"
+                placeholder="请输入配置文件URL"
+                clearable
+              />
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="手动输入" name="manual">
+          <el-form label-width="80px" style="margin-top: 20px;">
+            <el-form-item label="配置内容">
+              <el-input
+                v-model="parseForm.content"
+                type="textarea"
+                :rows="15"
+                placeholder="请粘贴配置JSON内容"
+              />
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+      <template #footer>
+        <el-button @click="showParseDialog = false">取消</el-button>
+        <el-button type="primary" @click="handleParseConfig" :loading="parsing">
+          解析并导入
+        </el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type UploadProps } from 'element-plus'
-import { Plus, Upload, Refresh } from '@element-plus/icons-vue'
+import { Plus, Upload, Refresh, Link } from '@element-plus/icons-vue'
 import { useSourceStore } from '@/stores/source'
 import { sourceApi } from '@/api'
 import type { Source } from '@/types'
@@ -154,6 +193,10 @@ const formRef = ref<FormInstance>()
 const dialogVisible = ref(false)
 const isEdit = ref(false)
 const submitting = ref(false)
+const showParseDialog = ref(false)
+const parsing = ref(false)
+const parseTab = ref('url')
+const parseForm = reactive({ url: 'http://www.饭太硬.com/tv', content: '' })
 const currentPage = ref(1)
 const pageSize = ref(20)
 
@@ -303,6 +346,66 @@ const handleUpload: UploadProps['beforeUpload'] = async (file) => {
     ElMessage.error(error.message || '导入失败')
   }
   return false // 阻止默认上传行为
+}
+
+// 从URL解析配置
+const handleParseUrl = async () => {
+  if (!parseForm.url.trim()) {
+    ElMessage.warning('请输入配置URL')
+    return
+  }
+
+  parsing.value = true
+  try {
+    const res = await sourceApi.parseFromUrl(parseForm.url)
+    ElMessage.success(`成功导入 ${res.data.sources.length} 个数据源，加载 ${res.data.loadedCount} 个Spider`)
+    showParseDialog.value = false
+    parseForm.url = ''
+    handleRefresh()
+  } catch (error: any) {
+    ElMessage.error(error.message || '解析失败')
+  } finally {
+    parsing.value = false
+  }
+}
+
+// 解析配置（统一处理）
+const handleParseConfig = async () => {
+  if (parseTab.value === 'url') {
+    await handleParseUrl()
+  } else {
+    await handleParseManual()
+  }
+}
+
+// 手动输入配置
+const handleParseManual = async () => {
+  if (!parseForm.content.trim()) {
+    ElMessage.warning('请输入配置内容')
+    return
+  }
+
+  parsing.value = true
+  try {
+    // 验证JSON格式
+    const config = JSON.parse(parseForm.content)
+
+    // 直接调用后端解析接口
+    const res = await sourceApi.parseFromUrl('data:application/json;base64,' + btoa(parseForm.content))
+
+    ElMessage.success(`成功导入 ${res.data.sources.length} 个数据源`)
+    showParseDialog.value = false
+    parseForm.content = ''
+    handleRefresh()
+  } catch (error: any) {
+    if (error.message.includes('JSON')) {
+      ElMessage.error('配置内容不是有效的JSON格式')
+    } else {
+      ElMessage.error(error.message || '解析失败')
+    }
+  } finally {
+    parsing.value = false
+  }
 }
 
 onMounted(() => {

@@ -245,4 +245,238 @@ export class SourceService {
       };
     }
   }
+
+  /**
+   * 从远程URL解析配置并入库
+   */
+  async parseFromUrl(url: string): Promise<{
+    sources: Source[];
+    loadedCount: number;
+    failedCount: number;
+  }> {
+    this.logger.log(`Fetching config from: ${url}`);
+
+    try {
+      // 获取远程配置
+      const axios = require('axios');
+      const response = await axios.get(url, {
+        timeout: 15000,
+        responseType: 'arraybuffer', // 获取原始二进制数据
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': '*/*',
+        },
+      });
+
+      const rawData = Buffer.from(response.data);
+      this.logger.log(`Received ${rawData.length} bytes of data`);
+
+      // 尝试多种解码方式
+      let configData = await this.tryDecodeData(rawData);
+
+      if (!configData) {
+        throw new Error('Failed to decode data with all methods');
+      }
+
+      // 解析JSON
+      let config: any;
+      if (typeof configData === 'string') {
+        config = JSON.parse(configData);
+      } else {
+        config = configData;
+      }
+
+      this.logger.log('Config parsed successfully');
+
+      // 解析数据源列表
+      const sources: CreateSourceDto[] = [];
+
+      // 支持多种配置格式
+      if (config.video && Array.isArray(config.video)) {
+        // TVBox标准格式
+        for (const item of config.video) {
+          sources.push({
+            sourceKey: item.key || item.name || item.url,
+            sourceName: item.name || item.key,
+            sourceType: this.parseSourceType(item.type),
+            sourceUrl: item.url,
+            spiderType: item.type === 3 || item.type === '3' ? this.getSpiderType(item) : undefined,
+            spiderContent: item.type === 3 || item.type === '3' ? (item.ext || item.jar || item.js || item.spider) : undefined,
+            status: 1,
+          });
+        }
+      } else if (Array.isArray(config)) {
+        // 数组格式
+        for (const item of config) {
+          sources.push({
+            sourceKey: item.key || item.name || item.sourceKey || item.url,
+            sourceName: item.name || item.sourceName || item.key,
+            sourceType: this.parseSourceType(item.type || item.sourceType),
+            sourceUrl: item.url || item.sourceUrl,
+            spiderType: (item.type === 3 || item.type === '3') ? this.getSpiderType(item) : undefined,
+            spiderContent: (item.type === 3 || item.type === '3') ? (item.ext || item.jar || item.js || item.spider || item.spiderContent) : undefined,
+            status: item.status !== undefined ? item.status : 1,
+          });
+        }
+      } else if (config.sources && Array.isArray(config.sources)) {
+        // sources字段格式
+        for (const item of config.sources) {
+          sources.push({
+            sourceKey: item.key || item.name || item.sourceKey || item.url,
+            sourceName: item.name || item.sourceName || item.key,
+            sourceType: this.parseSourceType(item.type || item.sourceType),
+            sourceUrl: item.url || item.sourceUrl,
+            spiderType: (item.type === 3 || item.type === '3') ? this.getSpiderType(item) : item.spiderType,
+            spiderContent: (item.type === 3 || item.type === '3') ? (item.ext || item.jar || item.js || item.spider || item.spiderContent) : undefined,
+            status: item.status !== undefined ? item.status : 1,
+          });
+        }
+      }
+
+      this.logger.log(`Found ${sources.length} sources in config`);
+
+      // 保存到数据库
+      const saved = await this.createBatch(sources);
+
+      // 加载 Spider
+      let loadedCount = 0;
+      let failedCount = 0;
+
+      for (const source of saved) {
+        if (source.sourceType === 3 && source.spiderContent) {
+          try {
+            await this.loadSpider(source);
+            loadedCount++;
+          } catch (error) {
+            this.logger.error(`Failed to load Spider ${source.sourceKey}`, error);
+            failedCount++;
+          }
+        }
+      }
+
+      return { sources: saved, loadedCount, failedCount };
+    } catch (error) {
+      this.logger.error('Failed to parse config from URL', error);
+      throw new ConfigParseException('Failed to parse config from URL: ' + error.message);
+    }
+  }
+
+  /**
+   * 尝试多种方式解码数据
+   */
+  private async tryDecodeData(rawData: Buffer): Promise<string | null> {
+    const methods = [
+      { name: 'UTF-8', fn: () => this.decodeUtf8(rawData) },
+      { name: 'Base64', fn: () => this.decodeBase64(rawData) },
+      { name: 'GZIP', fn: () => this.decodeGzip(rawData) },
+      { name: 'Base64+GZIP', fn: () => this.decodeBase64Gzip(rawData) },
+      { name: 'Extract-JSON', fn: () => this.extractJson(rawData) },
+    ];
+
+    for (const method of methods) {
+      try {
+        this.logger.log(`Trying ${method.name} decoding...`);
+        const result = method.fn();
+        if (result) {
+          // 验证是否是有效的JSON
+          JSON.parse(result);
+          this.logger.log(`✓ ${method.name} decoding successful`);
+          return result;
+        }
+      } catch (error) {
+        this.logger.debug(`✗ ${method.name} decoding failed: ${error.message}`);
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * UTF-8解码
+   */
+  private decodeUtf8(data: Buffer): string | null {
+    const text = data.toString('utf-8');
+    // 检查是否包含JSON标记
+    if (text.includes('{') || text.includes('[')) {
+      return text;
+    }
+    return null;
+  }
+
+  /**
+   * Base64解码
+   */
+  private decodeBase64(data: Buffer): string | null {
+    const text = data.toString('utf-8').trim();
+    // 检查是否是有效的Base64
+    if (/^[A-Za-z0-9+/=\s]+$/.test(text)) {
+      const decoded = Buffer.from(text, 'base64');
+      return decoded.toString('utf-8');
+    }
+    return null;
+  }
+
+  /**
+   * GZIP解压
+   */
+  private decodeGzip(data: Buffer): string | null {
+    const zlib = require('zlib');
+    const decompressed = zlib.gunzipSync(data);
+    return decompressed.toString('utf-8');
+  }
+
+  /**
+   * Base64解码后GZIP解压
+   */
+  private decodeBase64Gzip(data: Buffer): string | null {
+    const text = data.toString('utf-8').trim();
+    if (/^[A-Za-z0-9+/=\s]+$/.test(text)) {
+      const decoded = Buffer.from(text, 'base64');
+      const zlib = require('zlib');
+      const decompressed = zlib.gunzipSync(decoded);
+      return decompressed.toString('utf-8');
+    }
+    return null;
+  }
+
+  /**
+   * 从文本中提取JSON
+   */
+  private extractJson(data: Buffer): string | null {
+    const text = data.toString('utf-8');
+
+    // 尝试找到JSON对象
+    const objectMatch = text.match(/\{[\s\S]*\}/);
+    if (objectMatch) {
+      return objectMatch[0];
+    }
+
+    // 尝试找到JSON数组
+    const arrayMatch = text.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      return arrayMatch[0];
+    }
+
+    return null;
+  }
+
+  /**
+   * 解析数据源类型
+   */
+  private parseSourceType(type: any): number {
+    if (typeof type === 'number') return type;
+    if (typeof type === 'string') {
+      const typeMap: Record<string, number> = {
+        'xml': 0,
+        'json': 1,
+        'spider': 3,
+        'jar': 3,
+        'js': 3,
+        'py': 3,
+        'extend': 4,
+      };
+      return typeMap[type.toLowerCase()] || 0;
+    }
+    return 0;
+  }
 }

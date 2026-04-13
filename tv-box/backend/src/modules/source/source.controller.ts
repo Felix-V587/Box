@@ -41,6 +41,17 @@ export class SourceController {
     };
   }
 
+  @Post('parse-url')
+  @ApiOperation({ summary: '从URL解析配置并入库' })
+  async parseFromUrl(@Body('url') url: string) {
+    const result = await this.sourceService.parseFromUrl(url);
+    return {
+      sources: result.sources,
+      loadedCount: result.loadedCount,
+      failedCount: result.failedCount,
+    };
+  }
+
   @Post()
   @ApiOperation({ summary: '创建数据源' })
   async create(@Body() dto: CreateSourceDto) {

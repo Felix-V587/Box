@@ -55,4 +55,13 @@ export const sourceApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
   },
+
+  // 从URL解析配置
+  parseFromUrl(url: string) {
+    return request.post<{
+      sources: Source[]
+      loadedCount: number
+      failedCount: number
+    }>('/sources/parse-url', { url })
+  },
 }

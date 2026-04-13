@@ -1,168 +1,124 @@
-# 错误诊断和修复指南
+# 数据源配置解析问题排查
 
-## 已修复的错误
+## 问题描述
 
-### 1. DTO 拼写错误
-**文件**: `src/modules/player/dto/player.dto.ts`
-**错误**: 第 122 行 `pageS ize` 拼写错误
-**修复**: 改为 `pageSize`
-
-### 2. 搜索服务类型错误
-**文件**: `src/modules/search/search.service.ts`
-**错误**: `sourceKey: sourceKeys as any` 类型不匹配
-**修复**: 使用 `sourceKeys.map(key => ({ sourceKey: key, status: 1 }))`
-
-### 3. 搜索建议查询错误
-**文件**: `src/modules/search/search.service.ts`
-**错误**: `MoreThan(keyword)` 不适用于字符串搜索
-**修复**: 改为 `Like(\`%${keyword}%\`)` 并添加 `Like` 导入
-
-## 常见启动错误及解决方案
-
-### 错误 1: 模块导入失败
-
-**症状**:
+从URL `http://www.饭太硬.com/tv` 导入配置时失败，提示：
 ```
-Error: Cannot find module 'xxx'
+Failed to parse config from URL: Failed to decode data with all methods
 ```
 
-**解决方案**:
+## 排查步骤
+
+### 1. 手动测试接口
+
+运行深度分析脚本：
 ```bash
 cd tv-box/backend
-npm install
+node deep-analyze.js
 ```
 
-### 错误 2: TypeScript 编译错误
+这个脚本会：
+- 获取原始数据
+- 尝试多种解码方式
+- 保存中间结果到文件
+- 输出详细的分析日志
 
-**症状**:
-```
-Type 'xxx' is not assignable to type 'yyy'
-```
+### 2. 检查生成的文件
 
-**解决方案**:
-1. 检查 tsconfig.json 配置
-2. 确保所有依赖已安装
-3. 重启 TypeScript 服务器
+脚本会生成以下文件：
+- `source-raw.bin` - 原始数据
+- `decoded-json.json` - 成功解析的JSON（如果成功）
+- `source-gzip.bin` - GZIP解压后的数据
+- `source-base64.bin` - Base64解码后的数据
+- `source-base64-gzip.bin` - Base64+GZIP解码后的数据
 
-### 错误 3: 数据库连接错误
+### 3. 使用十六进制编辑器分析
 
-**症状**:
-```
-Error: SQLITE_CANTOPEN: unable to open database file
-```
+如果自动解码都失败，可以使用十六进制编辑器打开 `source-raw.bin`：
+- 查看文件头，识别文件类型
+- 查找特定字符串（如 "video", "spider", "http"）
+- 分析数据结构
 
-**解决方案**:
-1. 确保 `data/` 目录存在
-2. 检查 `.env` 中的 `DB_DATABASE` 路径
-3. 确保有文件写入权限
+### 4. 可能的原因
 
-### 错误 4: 端口占用
+1. **数据加密**：使用了非标准的加密算法
+   - AES加密
+   - 自定义加密算法
+   - 需要密钥解密
 
-**症状**:
-```
-Error: listen EADDRINUSE: address already in use :::3000
-```
+2. **数据压缩**：使用了非标准的压缩格式
+   - LZMA压缩
+   - Brotli压缩
+   - 自定义压缩算法
 
-**解决方案**:
-1. 修改 `.env` 中的 `PORT` 为其他端口
-2. 或关闭占用 3000 端口的进程
+3. **数据格式**：不是JSON格式
+   - XML格式
+   - 二进制格式
+   - 自定义格式
 
-### 错误 5: 装饰器错误
+4. **访问限制**：
+   - 需要特定的User-Agent
+   - 需要认证token
+   - IP限制
 
-**症状**:
-```
-Error: Unable to resolve signature of property decorator
-```
+## 解决方案
 
-**解决方案**:
-1. 确保 `tsconfig.json` 中 `experimentalDecorators: true`
-2. 确保 `emitDecoratorMetadata: true`
-3. 重启开发服务器
+### 方案1：手动获取配置
 
-## 启动步骤
+1. 使用浏览器访问URL
+2. 查看返回的数据
+3. 如果是加密的，尝试找到解密方法
+4. 手动创建JSON配置文件
+5. 使用"导入配置文件"功能上传
 
-### 方法 1: 使用批处理脚本（Windows）
-```bash
-# 在项目根目录运行
-start-backend.bat
-```
+### 方案2：修改解码逻辑
 
-### 方法 2: 手动启动
-```bash
-cd tv-box/backend
+根据 `deep-analyze.js` 的输出结果，修改后端解码逻辑：
 
-# 安装依赖（首次运行）
-npm install
+1. 如果发现特定的文件头，添加对应的解码方法
+2. 如果发现数据在特定位置，添加提取逻辑
+3. 如果发现需要解密，添加解密逻辑
 
-# 启动开发服务器
-npm run start:dev
-```
+### 方案3：使用Spider
 
-### 方法 3: 使用 pnpm（如果可用）
-```bash
-cd tv-box/backend
-pnpm install
-pnpm run start:dev
-```
+如果配置确实加密，可以：
+1. 创建一个Spider来处理这个数据源
+2. Spider中实现解密逻辑
+3. 使用Spider的homeContent方法返回解析后的数据
 
-## 验证安装
+## 临时解决方案
 
-### 1. 检查依赖
-```bash
-cd tv-box/backend
-npm list --depth=0
-```
+### 手动创建配置文件
 
-应该看到以下核心依赖：
-- @nestjs/common
-- @nestjs/core
-- @nestjs/typeorm
-- typeorm
-- better-sqlite3
-- class-validator
-- @nestjs/swagger
+根据TVBox标准格式创建配置文件：
 
-### 2. 检查 TypeScript 编译
-```bash
-cd tv-box/backend
-npm run build
+```json
+{
+  "video": [
+    {
+      "key": "饭太硬",
+      "name": "饭太硬",
+      "type": 0,
+      "url": "http://www.饭太硬.com/tv"
+    }
+  ]
+}
 ```
 
-如果没有错误输出，说明编译成功。
+保存为 `config.json`，然后在前端使用"导入配置文件"功能上传。
 
-### 3. 检查数据库
-启动后应该自动创建 `data/tvbox.db` 文件。
+## 下一步
 
-## 调试技巧
-
-### 1. 查看详细日志
-修改 `.env`:
-```
-LOG_LEVEL=debug
-```
-
-### 2. 启用数据库日志
-修改 `.env`:
-```
-DB_LOGGING=true
-```
-
-### 3. 检查 API 文档
-启动后访问: http://localhost:3000/api-docs
-
-如果能看到 Swagger 文档，说明服务启动成功。
-
-## 如果仍然无法启动
-
-请提供以下信息：
-1. 完整的错误日志
-2. Node.js 版本 (`node -v`)
-3. npm 版本 (`npm -v`)
-4. 操作系统版本
-5. `package.json` 内容
+1. 运行 `node deep-analyze.js` 查看详细分析结果
+2. 根据分析结果确定数据格式
+3. 如果需要，添加自定义解码逻辑
+4. 或者使用手动配置方式
 
 ## 联系支持
 
-如果以上方法都无法解决问题，请：
-1. 检查 GitHub Issues
-2. 提交新的 Issue 并附上错误日志
+如果以上方法都无法解决，请提供：
+- `deep-analyze.js` 的完整输出
+- `source-raw.bin` 文件（前1000字节即可）
+- 数据源的说明文档（如果有）
+
+这将帮助分析具体的数据格式和解码方法。
