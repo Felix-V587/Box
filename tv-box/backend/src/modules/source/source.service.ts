@@ -287,6 +287,8 @@ export class SourceService {
       }
 
       this.logger.log('Config parsed successfully');
+      this.logger.log(`Config type: ${typeof config}`);
+      this.logger.log(`Config keys: ${Object.keys(config).join(', ')}`);
 
       // 解析数据源列表
       const sources: CreateSourceDto[] = [];
@@ -294,7 +296,22 @@ export class SourceService {
       // 支持多种配置格式
       if (config.video && Array.isArray(config.video)) {
         // TVBox标准格式
+        this.logger.log('Parsing TVBox video format');
         for (const item of config.video) {
+          sources.push({
+            sourceKey: item.key || item.name || item.url,
+            sourceName: item.name || item.key,
+            sourceType: this.parseSourceType(item.type),
+            sourceUrl: item.url,
+            spiderType: item.type === 3 || item.type === '3' ? this.getSpiderType(item) : undefined,
+            spiderContent: item.type === 3 || item.type === '3' ? (item.ext || item.jar || item.js || item.spider) : undefined,
+            status: 1,
+          });
+        }
+      } else if (config.sites && Array.isArray(config.sites)) {
+        // TVBox sites格式
+        this.logger.log('Parsing TVBox sites format');
+        for (const item of config.sites) {
           sources.push({
             sourceKey: item.key || item.name || item.url,
             sourceName: item.name || item.key,
@@ -307,6 +324,7 @@ export class SourceService {
         }
       } else if (Array.isArray(config)) {
         // 数组格式
+        this.logger.log('Parsing array format');
         for (const item of config) {
           sources.push({
             sourceKey: item.key || item.name || item.sourceKey || item.url,
@@ -320,6 +338,7 @@ export class SourceService {
         }
       } else if (config.sources && Array.isArray(config.sources)) {
         // sources字段格式
+        this.logger.log('Parsing sources format');
         for (const item of config.sources) {
           sources.push({
             sourceKey: item.key || item.name || item.sourceKey || item.url,
@@ -331,6 +350,9 @@ export class SourceService {
             status: item.status !== undefined ? item.status : 1,
           });
         }
+      } else {
+        this.logger.warn('Unknown config format, no data sources found');
+        this.logger.warn(`Config structure: ${JSON.stringify(config).substring(0, 500)}`);
       }
 
       this.logger.log(`Found ${sources.length} sources in config`);
@@ -367,6 +389,7 @@ export class SourceService {
   private async tryDecodeData(rawData: Buffer): Promise<string | null> {
     const methods = [
       { name: 'UTF-8', fn: () => this.decodeUtf8(rawData) },
+      { name: 'TVBox-Base64', fn: () => this.decodeTvBoxBase64(rawData) },
       { name: 'Base64', fn: () => this.decodeBase64(rawData) },
       { name: 'GZIP', fn: () => this.decodeGzip(rawData) },
       { name: 'Base64+GZIP', fn: () => this.decodeBase64Gzip(rawData) },
@@ -385,6 +408,41 @@ export class SourceService {
         }
       } catch (error) {
         this.logger.debug(`✗ ${method.name} decoding failed: ${error.message}`);
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * TVBox特殊Base64解码
+   * 格式: [A-Za-z]{8}\*\* 后跟Base64内容
+   */
+  private decodeTvBoxBase64(data: Buffer): string | null {
+    const text = data.toString('utf-8');
+
+    // TVBox Base64标记: 8个字母 + 2个星号
+    const base64Pattern = /[A-Za-z]{8}\*\*/;
+    const match = text.match(base64Pattern);
+
+    if (match) {
+      this.logger.log(`Found TVBox Base64 marker: ${match[0]}`);
+
+      // 找到标记位置，从标记后10个字符开始提取Base64内容
+      const startIndex = text.indexOf(match[0]) + 10;
+      const base64Content = text.substring(startIndex);
+
+      this.logger.log(`Base64 content length: ${base64Content.length}`);
+
+      try {
+        const decoded = Buffer.from(base64Content, 'base64').toString('utf-8');
+        this.logger.log(`Decoded content length: ${decoded.length}`);
+        this.logger.log(`Decoded preview: ${decoded.substring(0, 200)}`);
+
+        return decoded;
+      } catch (e) {
+        this.logger.error('Base64 decode failed:', e);
+        return null;
       }
     }
 

@@ -1,0 +1,32 @@
+{
+  "name": "@tvbox/spider-engine",
+  "version": "1.0.0",
+  "description": "TVBox Spider Engine for Node.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest"
+  },
+  "keywords": [
+    "tvbox",
+    "spider",
+    "crawler",
+    "video"
+  ],
+  "author": "CodeArts",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "crypto-js": "^4.2.0",
+    "vm2": "^3.9.19"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}
