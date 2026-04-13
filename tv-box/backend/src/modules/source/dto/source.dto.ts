@@ -26,7 +26,6 @@ export class CreateSourceDto {
   @ApiPropertyOptional({ description: 'Spider 类型：jar/js/py' })
   @IsOptional()
   @IsString()
-  @IsIn(['jar', 'js', 'py'])
   spiderType?: string;
 
   @ApiPropertyOptional({ description: 'Spider 文件路径或内容' })

@@ -8,6 +8,11 @@ export const sourceApi = {
     return request.get<PageData<Source>>('/sources', { params })
   },
 
+  // 获取所有启用的数据源
+  getEnabled() {
+    return request.get<Source[]>('/sources/enabled')
+  },
+
   // 获取单个数据源
   getOne(id: number) {
     return request.get<Source>(`/sources/${id}`)

@@ -40,9 +40,9 @@
       <h3>搜索结果 ({{ searchStore.total }} 条，耗时 {{ searchStore.searchTime }}ms)</h3>
       <el-row :gutter="20">
         <el-col :span="6" v-for="item in searchStore.results" :key="item.vodId">
-          <el-card :body-style="{ padding: '0px' }" style="margin-bottom: 20px;">
-            <img 
-              :src="item.vodPic || '/placeholder.svg'" 
+          <el-card :body-style="{ padding: '0px' }" style="margin-bottom: 20px; cursor: pointer;" @click="handleItemClick(item)">
+            <img
+              :src="item.vodPic || '/placeholder.svg'"
               style="width: 100%; height: 200px; object-fit: cover;"
               @error="handleImageError"
             />
@@ -60,14 +60,17 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSearchStore } from '@/stores/search'
+import type { SearchResultItem } from '@/types'
 
+const router = useRouter()
 const searchStore = useSearchStore()
 const keyword = ref('')
 
 const handleSearch = async () => {
   if (!keyword.value.trim()) return
-  
+
   try {
     await searchStore.search({
       keyword: keyword.value,
@@ -77,6 +80,16 @@ const handleSearch = async () => {
   } catch (error) {
     console.error('搜索失败:', error)
   }
+}
+
+const handleItemClick = (item: SearchResultItem) => {
+  router.push({
+    name: 'detail',
+    query: {
+      sourceKey: item.sourceKey,
+      vodId: item.vodId,
+    },
+  })
 }
 
 const handleImageError = (e: Event) => {
