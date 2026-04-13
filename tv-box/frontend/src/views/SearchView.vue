@@ -1,3 +1,7 @@
+
+
+
+
 <template>
   <div class="search-view">
     <h1>视频搜索</h1>
@@ -37,7 +41,11 @@
       <el-row :gutter="20">
         <el-col :span="6" v-for="item in searchStore.results" :key="item.vodId">
           <el-card :body-style="{ padding: '0px' }" style="margin-bottom: 20px;">
-            <img :src="item.vodPic" style="width: 100%; height: 200px; object-fit: cover;" />
+            <img 
+              :src="item.vodPic || '/placeholder.svg'" 
+              style="width: 100%; height: 200px; object-fit: cover;"
+              @error="handleImageError"
+            />
             <div style="padding: 14px;">
               <div class="video-name">{{ item.vodName }}</div>
               <div class="video-remarks">{{ item.vodRemarks }}</div>
@@ -60,15 +68,26 @@ const keyword = ref('')
 const handleSearch = async () => {
   if (!keyword.value.trim()) return
   
-  await searchStore.search({
-    keyword: keyword.value,
-    page: 1,
-    pageSize: 20,
-  })
+  try {
+    await searchStore.search({
+      keyword: keyword.value,
+      page: 1,
+      pageSize: 20,
+    })
+  } catch (error) {
+    console.error('搜索失败:', error)
+  }
+}
+
+const handleImageError = (e: Event) => {
+  const target = e.target as HTMLImageElement
+  target.style.display = 'none'
 }
 
 onMounted(() => {
-  searchStore.fetchHistory()
+  searchStore.fetchHistory().catch((error) => {
+    console.error('获取搜索历史失败:', error)
+  })
 })
 </script>
 

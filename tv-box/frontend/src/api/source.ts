@@ -1,5 +1,5 @@
 import { request } from './request'
-import { Source, PageData } from '@/types'
+import type { Source, PageData } from '@/types'
 
 // 数据源 API
 export const sourceApi = {

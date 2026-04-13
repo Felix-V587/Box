@@ -1,4 +1,4 @@
-import { ApiResponse } from '../interfaces/response.interface';
+import type { ApiResponse } from '../interfaces/response.interface';
 
 /**
  * 统一响应 DTO

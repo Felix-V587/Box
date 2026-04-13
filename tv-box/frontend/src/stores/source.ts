@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { sourceApi } from '@/api'
-import { Source } from '@/types'
+import type { Source } from '@/types'
 
 export const useSourceStore = defineStore('source', () => {
   const sources = ref<Source[]>([])

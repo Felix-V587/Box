@@ -1,5 +1,5 @@
 import { request } from './request'
-import { VodInfo, PlayResult, VodRecord, VodCollect, PageData } from '@/types'
+import type { VodInfo, PlayResult, VodRecord, VodCollect, PageData } from '@/types'
 
 // 详情 API
 export const detailApi = {

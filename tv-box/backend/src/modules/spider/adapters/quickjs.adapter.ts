@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { SpiderExecutor } from '../spider.executor';
-import { Spider, SpiderResult, SpiderConfig } from '../interfaces/spider.interface';
+import type { Spider, SpiderResult, SpiderConfig } from '../interfaces/spider.interface';
 import { QuickJSSandbox } from '../sandbox/quickjs.sandbox';
 
 /**

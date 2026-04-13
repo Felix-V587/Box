@@ -1,5 +1,5 @@
 import { request } from './request'
-import { SearchResult, SearchHistory } from '@/types'
+import type { SearchResult, SearchHistory } from '@/types'
 
 // 搜索 API
 export const searchApi = {

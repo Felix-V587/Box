@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
-import axios, { AxiosInstance } from 'axios';
+import axios, { type AxiosInstance } from 'axios';
 import { SpiderExecutor } from '../spider.executor';
-import { Spider, SpiderResult, SpiderConfig } from '../interfaces/spider.interface';
+import type { Spider, SpiderResult, SpiderConfig } from '../interfaces/spider.interface';
 
 /**
  * HTTP API Spider 适配器

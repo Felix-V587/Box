@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { Spider, SpiderResult, SpiderConfig } from './interfaces/spider.interface';
+import type { Spider, SpiderResult, SpiderConfig } from './interfaces/spider.interface';
 
 /**
  * Spider 执行器抽象基类

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, In } from 'typeorm';
 import { Source } from './source.entity';
 import { SpiderService } from '../spider/spider.service';
-import { SpiderConfig } from '../spider/interfaces/spider.interface';
+import type { SpiderConfig } from '../spider/interfaces/spider.interface';
 import {
   CreateSourceDto,
   UpdateSourceDto,

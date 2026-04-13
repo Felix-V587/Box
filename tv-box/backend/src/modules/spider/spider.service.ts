@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SpiderExecutor } from './spider.executor';
-import { Spider, SpiderResult, SpiderConfig } from './interfaces/spider.interface';
+import type { Spider, SpiderResult, SpiderConfig } from './interfaces/spider.interface';
 import { QuickJSAdapter } from './adapters/quickjs.adapter';
 import { PythonAdapter } from './adapters/python.adapter';
 import { HttpAdapter } from './adapters/http.adapter';

@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ApiResponse } from '../interfaces/response.interface';
+import type { ApiResponse } from '../interfaces/response.interface';
 
 /**
  * 响应拦截器

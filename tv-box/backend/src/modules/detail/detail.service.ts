@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SpiderService } from '../spider/spider.service';
-import { DetailRequestDto, VodInfoDto, SeriesDto, EpisodeDto } from './dto/detail.dto';
+import type { DetailRequestDto, VodInfoDto, SeriesDto, EpisodeDto } from './dto/detail.dto';
 
 /**
  * 详情服务
